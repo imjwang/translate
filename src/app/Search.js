@@ -9,7 +9,7 @@ import {
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import { useState, useEffect, useCallback } from "react";
 
-const Search = () => {
+const Search = ({ setResult }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState("disabled");
@@ -17,8 +17,11 @@ const Search = () => {
   const callApi = useCallback(
     debounce(async (value) => {
       setLoading(true);
-      console.log(`API call with: ${value}`);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const res = await fetch(`/api/hello?data=${value}`, {
+        method: "POST",
+      });
+      const json = await res.json();
+      setResult(json[0]?.translation_text);
       setLoading(false);
       setColor("disabled");
     }, 3000),
