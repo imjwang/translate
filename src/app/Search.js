@@ -9,6 +9,13 @@ import {
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import { useState, useEffect, useCallback } from "react";
 
+const translateApi = async (value) => {
+  const res = await fetch(`/api/hello?data=${value}`, {
+    method: "POST",
+  });
+  return await res.json();
+};
+
 const Search = ({ setResult }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,14 +24,23 @@ const Search = ({ setResult }) => {
   const callApi = useCallback(
     debounce(async (value) => {
       setLoading(true);
-      const res = await fetch(`/api/hello?data=${value}`, {
-        method: "POST",
-      });
-      const json = await res.json();
-      setResult(json[0]?.translation_text);
+      let res;
+      try {
+        res = await translateApi(value);
+      } catch ({ error }) {
+        console.log(error);
+        // if (error.contains("loading")) {
+        //   setTimeout(async () => {
+        //     res = await translateApi(value);
+        //   }, 20000);
+        // }
+      }
+
+      setResult(res[0]?.translation_text ?? "error");
+
       setLoading(false);
       setColor("disabled");
-    }, 3000),
+    }, 2000),
     []
   );
 
@@ -49,7 +65,7 @@ const Search = ({ setResult }) => {
           setText(e.target.value);
         }}
         multiline
-        variant="filled"
+        variant="outlined"
         fullWidth
         color="primary"
         maxRows={10}
