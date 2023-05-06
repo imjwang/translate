@@ -1,4 +1,4 @@
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import {
   TextField,
   Card,
@@ -12,14 +12,15 @@ import { useState, useEffect, useCallback } from "react";
 const Search = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("disabled");
 
   const callApi = useCallback(
     debounce(async (value) => {
-      // Call your API here    setLoading(true);
       setLoading(true);
       console.log(`API call with: ${value}`);
       await new Promise((resolve) => setTimeout(resolve, 3000));
       setLoading(false);
+      setColor("disabled");
     }, 3000),
     []
   );
@@ -27,9 +28,14 @@ const Search = () => {
   useEffect(() => {
     // Call the debounced function whenever value changes
     if (text.length >= 3) {
+      setColor("primary");
       callApi(text);
     }
-  }, [text]);
+    return () => {
+      setColor("disabled");
+      callApi.cancel();
+    };
+  }, [text, callApi]);
   return (
     <Card sx={{ p: 2 }}>
       <TextField
@@ -52,7 +58,7 @@ const Search = () => {
           {loading ? (
             <CircularProgress size={30} color="primary" />
           ) : (
-            <GTranslateIcon color="primary" fontSize="large" />
+            <GTranslateIcon color={color} fontSize="large" />
           )}
         </Stack>
       </CardActions>
