@@ -8,7 +8,7 @@ const Mic = () => {
   return (
     <Box
       sx={{
-        position: "absolute",
+        position: "fixed",
         bottom: "20px",
         right: "20px",
         backgroundColor: "primary.main",

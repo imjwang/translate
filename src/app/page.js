@@ -12,6 +12,7 @@ import {
 import Mic from "./Mic";
 import Search from "./Search";
 import { useState } from "react";
+import Result from "./Result";
 
 export default function Home() {
   const [result, setResult] = useState("");
@@ -27,11 +28,7 @@ export default function Home() {
         <Card>
           <Search setResult={setResult} />
         </Card>
-        {result.length > 0 && (
-          <Paper sx={{ p: 3, mt: 8 }}>
-            <Typography variant="h4">{result}</Typography>
-          </Paper>
-        )}
+        {result.length > 0 && <Result result={result} />}
       </Stack>
       <Mic />
     </>

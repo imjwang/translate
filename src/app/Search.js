@@ -44,20 +44,19 @@ const Search = ({ setResult }) => {
       <TextField
         id="Type"
         label="在此输入"
-        placeholder="你好"
         value={text}
         onChange={(e) => {
           setText(e.target.value);
         }}
         multiline
-        variant="outlined"
+        variant="filled"
         fullWidth
-        color="secondary"
+        color="primary"
         maxRows={10}
         minRows={4}
       />
       <CardActions>
-        <Stack sx={{ width: "100%", height: "7vh" }} direction={"row-reverse"}>
+        <Stack sx={{ width: "100%", height: "5vh" }} direction={"row-reverse"}>
           {loading ? (
             <CircularProgress size={30} color="primary" />
           ) : (
