@@ -8,7 +8,7 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useEffect, useState } from "react";
 
-const Result = ({ result }) => {
+const Result = ({ result, variant = "user" }) => {
   const [audio, setAudio] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,8 +39,10 @@ const Result = ({ result }) => {
       sx={{
         p: 3,
         mt: 8,
-        bgcolor: "primary.dark",
+        bgcolor: variant === "user" ? "primary.main" : "secondary.main",
         color: "white",
+        width: "80vw",
+        alignSelf: variant === "user" ? "start" : "end",
       }}
     >
       <Typography variant="h4">{result}</Typography>
@@ -49,10 +51,14 @@ const Result = ({ result }) => {
           <CircularProgress sx={{ color: "white" }} />
         ) : (
           <IconButton
-            color="secondary"
+            color={variant === "user" ? "primary" : "secondary"}
             sx={{
-              backgroundColor: "secondary.light",
-              "&:hover": { backgroundColor: "secondary.main" },
+              backgroundColor:
+                variant === "user" ? "primary.light" : "secondary.light",
+              "&:hover": {
+                backgroundColor:
+                  variant === "user" ? "primary.main" : "secondary.main",
+              },
             }}
             onClick={handlePlay}
           >

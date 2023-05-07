@@ -1,12 +1,19 @@
-import { IconButton, Modal, Typography, Box, Card } from "@mui/material";
+import {
+  IconButton,
+  Modal,
+  Typography,
+  Box,
+  Card,
+  LinearProgress,
+  Stack,
+} from "@mui/material";
 import MicIcon from "@mui/icons-material/Mic";
+import CloseIcon from "@mui/icons-material/Close";
+import StopIcon from "@mui/icons-material/Stop";
 import { useState } from "react";
 
 const Mic = () => {
   const [modal, setModal] = useState(false);
-  const handleClick = () => {
-    console.log("hi");
-  };
 
   const toggleModal = () => {
     setModal(!modal);
@@ -20,32 +27,43 @@ const Mic = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            p: 4,
-            width: "50vw",
-            height: "30vh",
+            width: "80%",
+            maxWidth: "400px",
             textAlign: "center",
+            p: 2,
           }}
         >
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, quis
-            ultricies
-          </Typography>
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: "0",
+              right: "0",
+            }}
+          >
+            <CloseIcon onClick={toggleModal} />
+          </IconButton>
+          <Stack spacing={2}>
+            <Typography variant="body1">Listening...</Typography>
+            <LinearProgress />
+          </Stack>
+          <IconButton
+            sx={{ mt: 2 }}
+            onClick={() => console.log("stop recording")}
+          >
+            <StopIcon sx={{ fontSize: "2rem" }} />
+          </IconButton>
         </Card>
       </Modal>
-      <Box
+      <IconButton
+        onClick={toggleModal}
         sx={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
+          width: "100px",
+          height: "100px",
           backgroundColor: "primary.main",
-          borderRadius: "50%",
         }}
       >
-        <IconButton onClick={toggleModal}>
-          <MicIcon sx={{ fontSize: "3rem", color: "white" }} />
-        </IconButton>
-      </Box>
+        <MicIcon sx={{ fontSize: "5rem", color: "white" }} />
+      </IconButton>
     </>
   );
 };

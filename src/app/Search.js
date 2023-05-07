@@ -10,6 +10,7 @@ import {
   Typography,
   Stack,
   AccordionActions,
+  Collapse,
 } from "@mui/material";
 import TranslateIcon from "@mui/icons-material/Translate";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -63,14 +64,22 @@ const Search = ({ setResult }) => {
     };
   }, [text, callApi]);
   return (
-    <Accordion>
+    <Accordion
+      sx={{
+        minWidth: "200px",
+      }}
+      TransitionProps={{
+        unmountOnExit: true,
+        timeout: 750,
+        orientation: "horizontal",
+      }}
+    >
       <AccordionSummary
-        expan
         Accordion
         expandIcon={
           <ExpandMoreIcon
             sx={{
-              fontSize: "4rem",
+              fontSize: "3rem",
             }}
           />
         }
@@ -86,7 +95,11 @@ const Search = ({ setResult }) => {
           }}
         />
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails
+        sx={{
+          width: "80vw",
+        }}
+      >
         <TextField
           id="Type"
           label="Translate"
@@ -104,7 +117,7 @@ const Search = ({ setResult }) => {
         />
       </AccordionDetails>
       <AccordionActions>
-        <Stack sx={{ width: "100%", height: "5vh" }} direction={"row-reverse"}>
+        <Stack direction={"row-reverse"}>
           {loading ? (
             <CircularProgress size={30} color="primary" />
           ) : (

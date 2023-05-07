@@ -27,13 +27,17 @@ export default function Home() {
           <Typography variant="h4">k2en</Typography>
         </Toolbar>
       </AppBar>
-      <Stack spacing={4} sx={{ m: 4 }}>
+      <Stack spacing={4} alignItems="center" sx={{ m: 4 }} direction="column">
+        <Mic />
         <Card>
           <Search setResult={setResult} />
         </Card>
-        {result.length > 0 && <Result result={result} />}
       </Stack>
-      <Mic />
+      <Stack sx={{ m: 4 }} direction="column-reverse">
+        {result.length > 0 && <Result result={result} />}
+        <Result result="Yeah, totally." variant="other" />
+        <Result result="It's a beautiful day today!" />
+      </Stack>
     </>
   );
 }
