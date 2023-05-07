@@ -56,7 +56,7 @@ const Result = ({ result }) => {
             }}
             onClick={handlePlay}
           >
-            <PlayArrowIcon sx={{ fontSize: "3rem", color: "white" }} />
+            <PlayArrowIcon sx={{ fontSize: "2rem", color: "white" }} />
           </IconButton>
         )}
       </Stack>

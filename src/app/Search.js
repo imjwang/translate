@@ -1,12 +1,19 @@
-import { debounce, set } from "lodash";
+import { debounce } from "lodash";
 import {
   TextField,
   Card,
   CardActions,
-  Stack,
   CircularProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Stack,
+  AccordionActions,
 } from "@mui/material";
-import GTranslateIcon from "@mui/icons-material/GTranslate";
+import TranslateIcon from "@mui/icons-material/Translate";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState, useEffect, useCallback } from "react";
 
 const translateApi = async (value) => {
@@ -56,31 +63,56 @@ const Search = ({ setResult }) => {
     };
   }, [text, callApi]);
   return (
-    <Card sx={{ p: 2 }}>
-      <TextField
-        id="Type"
-        label="在此输入"
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
+    <Accordion>
+      <AccordionSummary
+        expan
+        Accordion
+        expandIcon={
+          <ExpandMoreIcon
+            sx={{
+              fontSize: "4rem",
+            }}
+          />
+        }
+        sx={{
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
         }}
-        multiline
-        variant="outlined"
-        fullWidth
-        color="primary"
-        maxRows={10}
-        minRows={4}
-      />
-      <CardActions>
+      >
+        <EditNoteIcon
+          sx={{
+            fontSize: "2rem",
+          }}
+        />
+      </AccordionSummary>
+      <AccordionDetails>
+        <TextField
+          id="Type"
+          label="Translate"
+          placeholder="你好..."
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+          }}
+          multiline
+          variant="outlined"
+          fullWidth
+          color="primary"
+          maxRows={10}
+          minRows={4}
+        />
+      </AccordionDetails>
+      <AccordionActions>
         <Stack sx={{ width: "100%", height: "5vh" }} direction={"row-reverse"}>
           {loading ? (
             <CircularProgress size={30} color="primary" />
           ) : (
-            <GTranslateIcon color={color} fontSize="large" />
+            <TranslateIcon color={color} fontSize="large" />
           )}
         </Stack>
-      </CardActions>
-    </Card>
+      </AccordionActions>
+    </Accordion>
   );
 };
 
