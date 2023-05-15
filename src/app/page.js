@@ -33,9 +33,9 @@ export default function Home() {
           <Search setResult={setResult} />
         </Card>
       </Stack>
-      <Stack sx={{ m: 4 }} direction="column-reverse">
+      <Stack sx={{ m: 4 }} direction="column">
         {result.length > 0 && <Result result={result} />}
-        <Result result="Yeah, totally." variant="other" />
+        <Result result="Yeah, totally." variant="voice" />
         <Result result="It's a beautiful day today!" />
       </Stack>
     </>

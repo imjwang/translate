@@ -8,7 +8,33 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useEffect, useState } from "react";
 
-const Result = ({ result, variant = "user" }) => {
+const getTheme = (variant) => {
+  switch (variant) {
+    case "text":
+      return {
+        bgcolor: "primary.main",
+        color: "white",
+        alignSelf: "start",
+        backgroundColor: "primary.light",
+      };
+    case "voice":
+      return {
+        bgcolor: "secondary.main",
+        color: "white",
+        alignSelf: "end",
+        backgroundColor: "secondary.light",
+      };
+    default:
+      return {
+        bgcolor: "error.main",
+        color: "white",
+        alignSelf: "center",
+        backgroundColor: "error.light",
+      };
+  }
+};
+
+const Result = ({ result, variant = "text" }) => {
   const [audio, setAudio] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -34,15 +60,18 @@ const Result = ({ result, variant = "user" }) => {
       audio.play();
     }
   };
+
+  const theme = getTheme(variant);
+
   return (
     <Paper
       sx={{
         p: 3,
         mt: 8,
-        bgcolor: variant === "user" ? "primary.main" : "secondary.main",
+        bgcolor: theme.bgcolor,
         color: "white",
         width: "80vw",
-        alignSelf: variant === "user" ? "start" : "end",
+        alignSelf: theme.alignSelf,
       }}
     >
       <Typography variant="h4">{result}</Typography>
@@ -51,13 +80,11 @@ const Result = ({ result, variant = "user" }) => {
           <CircularProgress sx={{ color: "white" }} />
         ) : (
           <IconButton
-            color={variant === "user" ? "primary" : "secondary"}
+            color={theme.color}
             sx={{
-              backgroundColor:
-                variant === "user" ? "primary.light" : "secondary.light",
+              backgroundColor: theme.backgroundColor,
               "&:hover": {
-                backgroundColor:
-                  variant === "user" ? "primary.main" : "secondary.main",
+                backgroundColor: theme.backgroundColor,
               },
             }}
             onClick={handlePlay}
